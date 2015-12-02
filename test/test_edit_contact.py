@@ -1,6 +1,8 @@
 from model.contact import Contact
 
-def test_edit_contact(app):
-    app.session.login( username="admin",password="secret")
-    app.contact.edit_contact(Contact(firstname="Vanya", lastname="Ivanov", home="375295225058"))
-    app.session.logout()
+def test_edit_contact_firstname(app):
+    app.contact.edit_contact(Contact(firstname="Vanya"))
+
+
+def test_edit_contact_lastname(app):
+    app.contact.edit_contact(Contact(lastname="Petrov"))
