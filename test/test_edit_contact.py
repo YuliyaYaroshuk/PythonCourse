@@ -8,5 +8,5 @@ def test_edit_contact_firstname(app):
 
 def test_edit_contact_lastname(app):
     if app.contact.count() == 0:
-        app.contact.create(Contact(firstname="Yaroshuk"))
+        app.contact.create(Contact(lastname="Yaroshuk"))
     app.contact.edit_contact(Contact(lastname="Petrov"))

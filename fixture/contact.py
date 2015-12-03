@@ -1,4 +1,4 @@
-from model import contact
+
 class ContactHelper:
 
     def __init__(self,app):
@@ -30,13 +30,15 @@ class ContactHelper:
 
     def edit_contact(self, new_contact_data):
         wd = self.app.wd
-        wd.find_element_by_css_selector("img[alt=\"Edit\"]").click()
+        wd.get("http://localhost:8080/addressbook/")
+        wd.find_element_by_css_selector(".center>a>img[title=\"Edit\"]").click()
         #wd.find_element_by_xpath("//table[@id='maintable']/tbody/tr[3]/td[8]/a/img").click()
         self.fill_contact_form(new_contact_data)
         wd.find_element_by_name("update").click()
 
     def delete_contact(self):
         wd = self.app.wd
+        wd.get("http://localhost:8080/addressbook/")
         wd.find_element_by_name("selected[]").click()
         wd.find_element_by_xpath("//div[@id='content']/form[2]/div[2]/input").click()
         wd.switch_to_alert().accept()
