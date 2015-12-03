@@ -30,7 +30,8 @@ class ContactHelper:
 
     def edit_contact(self, new_contact_data):
         wd = self.app.wd
-        wd.find_element_by_xpath("//table[@id='maintable']/tbody/tr[3]/td[8]/a/img").click()
+        wd.find_element_by_css_selector("img[alt=\"Edit\"]").click()
+        #wd.find_element_by_xpath("//table[@id='maintable']/tbody/tr[3]/td[8]/a/img").click()
         self.fill_contact_form(new_contact_data)
         wd.find_element_by_name("update").click()
 
@@ -40,7 +41,9 @@ class ContactHelper:
         wd.find_element_by_xpath("//div[@id='content']/form[2]/div[2]/input").click()
         wd.switch_to_alert().accept()
 
-
+    def count(self):
+        wd = self.app.wd
+        return len(wd.find_elements_by_name("selected[]"))
 
 
 
