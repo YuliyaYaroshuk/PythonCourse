@@ -1,4 +1,4 @@
-
+from model.contact import Contact
 class ContactHelper:
 
     def __init__(self,app):
@@ -47,7 +47,15 @@ class ContactHelper:
         wd = self.app.wd
         return len(wd.find_elements_by_name("selected[]"))
 
-
+    def get_contact_list(self):
+        wd = self.app.wd
+        wd.get("http://localhost:8080/addressbook/")
+        contacts=[]
+        for element in wd.find_elements_by_css_selector("#maintable>tbody>tr>td>input"):
+            #text = element.text
+            id = element.get_attribute("value")
+            contacts.append(Contact(id = id))
+        return contacts
 
 
 
