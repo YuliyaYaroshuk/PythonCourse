@@ -29,22 +29,28 @@ class ContactHelper:
         wd = self.app.wd
         wd.find_element_by_link_text("add new").click()
 
-    def edit_contact(self, new_contact_data):
+    def edit_contact_by_index(self,index, new_contact_data):
         wd = self.app.wd
         wd.get("http://localhost:8080/addressbook/")
-        wd.find_element_by_css_selector(".center>a>img[title=\"Edit\"]").click()
+        wd.find_elements_by_css_selector(".center>a>img[title=\"Edit\"]")[index].click()
         #wd.find_element_by_xpath("//table[@id='maintable']/tbody/tr[3]/td[8]/a/img").click()
         self.fill_contact_form(new_contact_data)
         wd.find_element_by_name("update").click()
         self.contact_cache = None
 
-    def delete_contact(self):
+    def edit_contact(self):
+        self.edit_contact_by_index(0)
+
+    def delete_contact_by_index(self, index):
         wd = self.app.wd
         wd.get("http://localhost:8080/addressbook/")
-        wd.find_element_by_name("selected[]").click()
+        wd.find_elements_by_name("selected[]")[index].click()
         wd.find_element_by_xpath("//div[@id='content']/form[2]/div[2]/input").click()
         wd.switch_to_alert().accept()
         self.contact_cache = None
+
+    def delete_contact(self):
+        self.delete_contact_by_index(0)
 
     def count(self):
         wd = self.app.wd
