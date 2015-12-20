@@ -18,18 +18,10 @@ class ContactHelper:
         self.change_field_value_contact("home", contact.home)
         self.change_field_value_contact("mobile", contact.mobile)
         self.change_field_value_contact("work", contact.work)
-        self.change_field_value_contact("middlename", contact.middlename)
-        self.change_field_value_contact("nickname", contact.nickname)
-        self.change_field_value_contact("title", contact.title)
-        self.change_field_value_contact("company", contact.company)
         self.change_field_value_contact("address", contact.address)
-        self.change_field_value_contact("fax", contact.fax)
         self.change_field_value_contact("email", contact.email)
         self.change_field_value_contact("email2", contact.email2)
         self.change_field_value_contact("email3", contact.email3)
-        self.change_field_value_contact("homepage", contact.homepage)
-
-
         # submit contact creation
         wd.find_element_by_xpath("//div[@id='content']/form/input[21]").click()
 
@@ -111,20 +103,14 @@ class ContactHelper:
         home = wd.find_element_by_name("home").get_attribute("value")
         mobile = wd.find_element_by_name("mobile").get_attribute("value")
         work = wd.find_element_by_name("work").get_attribute("value")
-        middlename = wd.find_element_by_name("middlename").get_attribute("value")
-        nickname = wd.find_element_by_name("nickname").get_attribute("value")
-        title = wd.find_element_by_name("title").get_attribute("value")
-        company = wd.find_element_by_name("company").get_attribute("value")
         address = wd.find_element_by_name("address").get_attribute("value")
-        fax = wd.find_element_by_name("fax").get_attribute("value")
         email = wd.find_element_by_name("email").get_attribute("value")
         email2 = wd.find_element_by_name("email2").get_attribute("value")
         email3 = wd.find_element_by_name("email3").get_attribute("value")
-        homepage = wd.find_element_by_name("homepage").get_attribute("value")
 
         return Contact(firstname=firstname, lastname=lastname,id=id,home=home, mobile= mobile, work=work,
-                       middlename=middlename,title=title,nickname=nickname,company=company,address=address,
-                       fax=fax,email=email,email2=email2,email3=email3,homepage=homepage)
+                       address=address,
+                       email=email,email2=email2,email3=email3)
 
     def get_contact_from_view_page(self, index):
         wd = self.app.wd
