@@ -62,7 +62,7 @@ class ContactHelper:
         self.app.open_home_page()
         #wd.get("http://localhost:8080/addressbook/")
         wd.find_elements_by_name("selected[]")[index].click()
-        wd.find_element_by_xpath("//div[@id='content']/form[2]/div[2]/input").click()
+        wd.find_element_by_css_selector(".left>input[value=\"Delete\"]").click()
         wd.switch_to_alert().accept()
         self.contact_cache = None
 
