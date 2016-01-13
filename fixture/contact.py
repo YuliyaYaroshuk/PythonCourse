@@ -44,6 +44,15 @@ class ContactHelper:
         wd.find_element_by_name("update").click()
         self.contact_cache = None
 
+    def edit_contact_by_id(self,id,new_contact_data):
+        wd = self.app.wd
+        self.app.open_home_page()
+        wd.find_element_by_css_selector("input[id='%s']" % id).click()
+        wd.find_element_by_css_selector(".center>a[href='edit.php?id=%s']"%id).click()
+        self.fill_contact_form(new_contact_data)
+        wd.find_element_by_name("update").click()
+        self.contact_cache = None
+
     def open_contact_to_edit_by_index(self,index):
         wd = self.app.wd
         self.app.open_home_page()
@@ -62,6 +71,15 @@ class ContactHelper:
         self.app.open_home_page()
         #wd.get("http://localhost:8080/addressbook/")
         wd.find_elements_by_name("selected[]")[index].click()
+        wd.find_element_by_css_selector(".left>input[value=\"Delete\"]").click()
+        wd.switch_to_alert().accept()
+        self.contact_cache = None
+
+    def delete_contact_by_id(self,id):
+        wd = self.app.wd
+        self.app.open_home_page()
+        #wd.get("http://localhost:8080/addressbook/")
+        wd.find_element_by_css_selector("input[id='%s']" % id).click()
         wd.find_element_by_css_selector(".left>input[value=\"Delete\"]").click()
         wd.switch_to_alert().accept()
         self.contact_cache = None
