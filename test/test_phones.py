@@ -1,20 +1,38 @@
 import re
 from random import randrange
+from model.contact import Contact
+from fixture.contact import ContactHelper
+
 def test_phones_on_home_page(app):
     contact_from_home_page = app.contact.get_contact_list()[0]
     contact_from_edit_page = app.contact.get_contact_info_from_edit_page(0)
     assert contact_from_home_page.all_phones_from_home_page == merge_phones_like_on_home_page(contact_from_edit_page)
 
-def test_all_form_on_home_page(app):
-    contacts = app.contact.get_contact_list()
-    index = randrange(len(contacts))
-    form_on_home_page=app.contact.get_contact_list()[index]
-    form_on_edit_page=app.contact.get_contact_info_from_edit_page(index)
-    assert form_on_home_page.all_phones_from_home_page==merge_phones_like_on_home_page(form_on_edit_page)
-    assert form_on_home_page.firstname == form_on_edit_page.firstname
-    assert form_on_home_page.lastname == form_on_edit_page.lastname
-    assert form_on_home_page.address == form_on_edit_page.address
-    assert form_on_home_page.all_emails_from_home_page == merge_emails_like_on_home_page(form_on_edit_page)
+def test_all_form_on_home_page(app,db):
+    i=0
+    j=0
+    db_contacts = db.get_contact_list()
+    list1 = sorted(app.contact.get_contact_list(),key=Contact.id_or_max)
+    while i in range(len(db_contacts))and j in range(len(list1)):
+        assert db_contacts[i].id == list1[j].id
+        assert db_contacts[i].firstname == list1[j].firstname
+        assert db_contacts[i].lastname == list1[j].lastname
+        assert db_contacts[i].address == list1[j].address
+        assert list1[j].all_phones_from_home_page==  "\n".join(filter(lambda x: x is not None,[db_contacts[i].home, db_contacts[i].mobile, db_contacts[i].work]))
+        assert list1[j].all_emails_from_home_page == "\n".join(filter(lambda x: x is not None,[db_contacts[i].email, db_contacts[i].email2, db_contacts[i].email3]))
+        i+=1
+        j+=1
+
+
+
+
+
+
+
+
+
+
+
 
 
 def test_on_contact_view_page(app):
@@ -32,5 +50,5 @@ def merge_phones_like_on_home_page(contact):
                              map(lambda x: clear(x) ,
                                  filter(lambda x: x is not None,[contact.home, contact.mobile, contact.work]))))
 
-def merge_emails_like_on_home_page(contact):
-    return "\n".join(filter(lambda x: x is not None,[contact.email, contact.email2, contact.email3]))
+def merge_emails_like_on_home_page(db_contacts):
+    return "\n".join(filter(lambda x: x is not None,[db_contacts.email, db_contacts.email2, db_contacts.email3]))
